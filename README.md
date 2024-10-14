@@ -20,12 +20,12 @@ This project has three graphs:
 The index graph takes in document objects indexes them.
 
 ```json
-[{ "page_content": "I have 1 cat." }]
+[{ "page_content": "LangGraph is a library for building stateful, multi-actor applications with LLMs, used to create agent and multi-agent workflows." }]
 ```
 
 If an empty list is provided (default), a list of sample documents from `src/sample_docs.json` is indexed instead. Those sample documents are based on the conceptual guides for LangChain and LangGraph.
 
-The retrieval graph manages a chat history and responds based on the fetched documents. It:
+The retrieval graph manages a chat history and responds based on the fetched documents. Specifically, it:
 
 1. Takes a user **query** as input
 2. Analyzes the query and determines how to route it:
