@@ -96,7 +96,15 @@ ELASTICSEARCH_API_KEY=<API_KEY>
 **Local Elasticsearch (Docker)**
 
 ```
-docker run -p 127.0.0.1:9200:9200 -d --name elasticsearch -e ELASTIC_PASSWORD=changeme -e "discovery.type=single-node" -e "xpack.security.http.ssl.enabled=false" -e "xpack.license.self_generated.type=trial" docker.elastic.co/elasticsearch/elasticsearch:8.15.1
+docker run \
+  -p 127.0.0.1:9200:9200 \
+  -d \
+  --name elasticsearch \
+  -e ELASTIC_PASSWORD=changeme \
+  -e "discovery.type=single-node" \
+  -e "xpack.security.http.ssl.enabled=false" \
+  -e "xpack.license.self_generated.type=trial" \
+  docker.elastic.co/elasticsearch/elasticsearch:8.15.1
 ```
 
 See the [official Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/run-elasticsearch-locally.html) for more information on running it locally.
