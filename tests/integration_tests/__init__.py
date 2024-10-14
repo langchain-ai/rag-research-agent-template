@@ -1,1 +1,1 @@
-"""Define any integration tests you want in this directory."""
+"""Integration tests for your graph."""

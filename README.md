@@ -1,26 +1,40 @@
-# LangGraph ReAct Agent Template
+# LangGraph Retrieval Chat Bot Template
 
-[![CI](https://github.com/langchain-ai/react-agent/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/langchain-ai/react-agent/actions/workflows/unit-tests.yml)
-[![Integration Tests](https://github.com/langchain-ai/react-agent/actions/workflows/integration-tests.yml/badge.svg)](https://github.com/langchain-ai/react-agent/actions/workflows/integration-tests.yml)
-[![Open in - LangGraph Studio](https://img.shields.io/badge/Open_in-LangGraph_Studio-00324d.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4NS4zMzMiIGhlaWdodD0iODUuMzMzIiB2ZXJzaW9uPSIxLjAiIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTEzIDcuOGMtNi4zIDMuMS03LjEgNi4zLTYuOCAyNS43LjQgMjQuNi4zIDI0LjUgMjUuOSAyNC41QzU3LjUgNTggNTggNTcuNSA1OCAzMi4zIDU4IDcuMyA1Ni43IDYgMzIgNmMtMTIuOCAwLTE2LjEuMy0xOSAxLjhtMzcuNiAxNi42YzIuOCAyLjggMy40IDQuMiAzLjQgNy42cy0uNiA0LjgtMy40IDcuNkw0Ny4yIDQzSDE2LjhsLTMuNC0zLjRjLTQuOC00LjgtNC44LTEwLjQgMC0xNS4ybDMuNC0zLjRoMzAuNHoiLz48cGF0aCBkPSJNMTguOSAyNS42Yy0xLjEgMS4zLTEgMS43LjQgMi41LjkuNiAxLjcgMS44IDEuNyAyLjcgMCAxIC43IDIuOCAxLjYgNC4xIDEuNCAxLjkgMS40IDIuNS4zIDMuMi0xIC42LS42LjkgMS40LjkgMS41IDAgMi43LS41IDIuNy0xIDAtLjYgMS4xLS44IDIuNi0uNGwyLjYuNy0xLjgtMi45Yy01LjktOS4zLTkuNC0xMi4zLTExLjUtOS44TTM5IDI2YzAgMS4xLS45IDIuNS0yIDMuMi0yLjQgMS41LTIuNiAzLjQtLjUgNC4yLjguMyAyIDEuNyAyLjUgMy4xLjYgMS41IDEuNCAyLjMgMiAyIDEuNS0uOSAxLjItMy41LS40LTMuNS0yLjEgMC0yLjgtMi44LS44LTMuMyAxLjYtLjQgMS42LS41IDAtLjYtMS4xLS4xLTEuNS0uNi0xLjItMS42LjctMS43IDMuMy0yLjEgMy41LS41LjEuNS4yIDEuNi4zIDIuMiAwIC43LjkgMS40IDEuOSAxLjYgMi4xLjQgMi4zLTIuMy4yLTMuMi0uOC0uMy0yLTEuNy0yLjUtMy4xLTEuMS0zLTMtMy4zLTMtLjUiLz48L3N2Zz4=)](https://langgraph-studio.vercel.app/templates/open?githubUrl=https://github.com/langchain-ai/react-agent)
+[![CI](https://github.com/langchain-ai/retrieval-agent-template/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/langchain-ai/retrieval-agent-template/actions/workflows/unit-tests.yml)
+[![Integration Tests](https://github.com/langchain-ai/retrieval-agent-template/actions/workflows/integration-tests.yml/badge.svg)](https://github.com/langchain-ai/retrieval-agent-template/actions/workflows/integration-tests.yml)
+[![Open in - LangGraph Studio](https://img.shields.io/badge/Open_in-LangGraph_Studio-00324d.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4NS4zMzMiIGhlaWdodD0iODUuMzMzIiB2ZXJzaW9uPSIxLjAiIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTEzIDcuOGMtNi4zIDMuMS03LjEgNi4zLTYuOCAyNS43LjQgMjQuNi4zIDI0LjUgMjUuOSAyNC41QzU3LjUgNTggNTggNTcuNSA1OCAzMi4zIDU4IDcuMyA1Ni43IDYgMzIgNmMtMTIuOCAwLTE2LjEuMy0xOSAxLjhtMzcuNiAxNi42YzIuOCAyLjggMy40IDQuMiAzLjQgNy42cy0uNiA0LjgtMy40IDcuNkw0Ny4yIDQzSDE2LjhsLTMuNC0zLjRjLTQuOC00LjgtNC44LTEwLjQgMC0xNS4ybDMuNC0zLjRoMzAuNHoiLz48cGF0aCBkPSJNMTguOSAyNS42Yy0xLjEgMS4zLTEgMS43LjQgMi41LjkuNiAxLjcgMS44IDEuNyAyLjcgMCAxIC43IDIuOCAxLjYgNC4xIDEuNCAxLjkgMS40IDIuNS4zIDMuMi0xIC42LS42LjkgMS40LjkgMS41IDAgMi43LS41IDIuNy0xIDAtLjYgMS4xLS44IDIuNi0uNGwyLjYuNy0xLjgtMi45Yy01LjktOS4zLTkuNC0xMi4zLTExLjUtOS44TTM5IDI2YzAgMS4xLS45IDIuNS0yIDMuMi0yLjQgMS41LTIuNiAzLjQtLjUgNC4yLjguMyAyIDEuNyAyLjUgMy4xLjYgMS41IDEuNCAyLjMgMiAyIDEuNS0uOSAxLjItMy41LS40LTMuNS0yLjEgMC0yLjgtMi44LS44LTMuMyAxLjYtLjQgMS42LS41IDAtLjYtMS4xLS4xLTEuNS0uNi0xLjItMS42LjctMS43IDMuMy0yLjEgMy41LS41LjEuNS4yIDEuNi4zIDIuMiAwIC43LjkgMS40IDEuOSAxLjYgMi4xLjQgMi4zLTIuMy4yLTMuMi0uOC0uMy0yLTEuNy0yLjUtMy4xLTEuMS0zLTMtMy4zLTMtLjUiLz48L3N2Zz4=)](https://langgraph-studio.vercel.app/templates/open?githubUrl=https://github.com/langchain-ai/retrieval-agent-template)
 
-This template showcases a [ReAct agent](https://arxiv.org/abs/2210.03629) implemented using [LangGraph](https://github.com/langchain-ai/langgraph), designed for [LangGraph Studio](https://github.com/langchain-ai/langgraph-studio). ReAct agents are uncomplicated, prototypical agents that can be flexibly extended to many tools.
+This is a starter project to help you get started with developing a RAG research agent using [LangGraph](https://github.com/langchain-ai/langgraph) in [LangGraph Studio](https://github.com/langchain-ai/langgraph-studio).
 
 ![Graph view in LangGraph studio UI](./static/studio_ui.png)
 
-The core logic, defined in `src/react_agent/graph.py`, demonstrates a flexible ReAct agent that iteratively reasons about user queries and executes actions, showcasing the power of this approach for complex problem-solving tasks.
-
 ## What it does
 
-The ReAct agent:
+This project has three graphs:
+
+* an "index" graph (`src/index_graph/graph.py`)
+* a "retrieval" graph (`src/retrieval_graph/graph.py`)
+* a "researcher" subgraph (part of the retrieval graph) (`src/researcher_graph/graph.py`)
+
+The index graph takes in document objects indexes them.
+
+```json
+[{ "page_content": "I have 1 cat." }]
+```
+
+If an empty list is provided (default), a list of sample documents from `src/sample_docs.json` is indexed instead. Those sample documents are based on the conceptual guides for LangChain and LangGraph.
+
+The retrieval graph manages a chat history and responds based on the fetched documents. It:
 
 1. Takes a user **query** as input
-2. Reasons about the query and decides on an action
-3. Executes the chosen action using available tools
-4. Observes the result of the action
-5. Repeats steps 2-4 until it can provide a final answer
-
-By default, it's set up with a basic set of tools, but can be easily extended with custom tools to suit various use cases.
+2. Analyzes the query and determines how to route it:
+- if the query is about "LangChain", it creates a research plan based on the user's query and passes the plan to the researcher subgraph
+- if the query is ambiguous, it asks for more information
+- if the query is general (unrelated to LangChain), it lets the user know
+3. If the query is about "LangChain", the researcher subgraph runs for each step in the research plan, until no more steps are left:
+- it first generates a list of queries based on the step
+- it then retrieves the relevant documents in parallel for all queries and return the documents to the retrieval graph
+4. Finally, the retrieval graph generates a response based on the retrieved documents and the conversation context
 
 ## Getting Started
 
@@ -32,20 +46,140 @@ Assuming you have already [installed LangGraph Studio](https://github.com/langch
 cp .env.example .env
 ```
 
-2. Define required API keys in your `.env` file.
-
-The primary [search tool](./src/react_agent/tools.py) [^1] used is [Tavily](https://tavily.com/). Create an API key [here](https://app.tavily.com/sign-in).
+2. Select your retriever & index, and save the access instructions to your `.env` file.
 
 <!--
 Setup instruction auto-generated by `langgraph template lock`. DO NOT EDIT MANUALLY.
 -->
 
-### Setup Model
+### Setup Retriever
 
-The defaults values for `model` are shown below:
+The defaults values for `retriever_provider` are shown below:
 
 ```yaml
-model: anthropic/claude-3-5-sonnet-20240620
+retriever_provider: elastic
+```
+
+Follow the instructions below to get set up, or pick one of the additional options.
+
+#### Elasticsearch
+
+Elasticsearch (as provided by Elastic) is an open source distributed search and analytics engine, scalable data store and vector database optimized for speed and relevance on production-scale workloads.
+
+##### Setup Elasticsearch
+Elasticsearch can be configured as the knowledge base provider for a retrieval agent by being deployed on Elastic Cloud (either as a hosted deployment or serverless project) or on your local environment.
+
+**Elasticsearch Serverless**
+
+1. Signup for a free 14 day trial with [Elasticsearch Serverless](https://cloud.elastic.co/registration?onboarding_token=search&cta=cloud-registration&tech=trial&plcmt=article%20content&pg=langchain).
+2. Get the Elasticsearch URL, found on home under "Copy your connection details".
+3. Create an API key found on home under "API Key".
+4. Copy the URL and API key to your `.env` file created above:
+
+```
+ELASTICSEARCH_URL=<ES_URL>
+ELASTICSEARCH_API_KEY=<API_KEY>
+```
+
+**Elastic Cloud**
+
+1. Signup for a free 14 day trial with [Elastic Cloud](https://cloud.elastic.co/registration?onboarding_token=search&cta=cloud-registration&tech=trial&plcmt=article%20content&pg=langchain).
+2. Get the Elasticsearch URL, found under Applications of your deployment.
+3. Create an API key. See the [official elastic documentation](https://www.elastic.co/search-labs/tutorials/install-elasticsearch/elastic-cloud#creating-an-api-key) for more information.
+4. Copy the URL and API key to your `.env` file created above:
+
+```
+ELASTICSEARCH_URL=<ES_URL>
+ELASTICSEARCH_API_KEY=<API_KEY>
+```
+**Local Elasticsearch (Docker)**
+
+```
+docker run -p 127.0.0.1:9200:9200 -d --name elasticsearch --network elastic-net   -e ELASTIC_PASSWORD=changeme   -e "discovery.type=single-node"   -e "xpack.security.http.ssl.enabled=false"   -e "xpack.license.self_generated.type=trial"   docker.elastic.co/elasticsearch/elasticsearch:8.15.1
+```
+
+See the [official Elastic documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/run-elasticsearch-locally.html) for more information on running it locally.
+
+Then populate the following in your `.env` file:
+
+```
+# As both Elasticsearch and LangGraph Studio runs in Docker, we need to use host.docker.internal to access.
+
+ELASTICSEARCH_URL=http://host.docker.internal:9200
+ELASTICSEARCH_USER=elastic
+ELASTICSEARCH_PASSWORD=changeme
+```
+#### MongoDB Atlas
+
+MongoDB Atlas is a fully-managed cloud database that includes vector search capabilities for AI-powered applications.
+
+1. Create a free Atlas cluster:
+- Go to the [MongoDB Atlas website](https://www.mongodb.com/cloud/atlas/register) and sign up for a free account.
+- After logging in, create a free cluster by following the on-screen instructions.
+
+2. Create a vector search index
+- Follow the instructions at [the Mongo docs](https://www.mongodb.com/docs/atlas/atlas-vector-search/vector-search-type/)
+- By default, we use the collection `langgraph_retrieval_agent.default` - create the index there
+- Add an indexed filter for path `user_id`
+- **IMPORTANT**: select Atlas Vector Search NOT Atlas Search when creating the index
+Your final JSON editor configuration should look something like the following:
+
+```json
+{
+  "fields": [
+    {
+      "numDimensions": 1536,
+      "path": "embedding",
+      "similarity": "cosine",
+      "type": "vector"
+    }
+  ]
+}
+```
+
+The exact numDimensions may differ if you select a different embedding model.
+
+2. Set up your environment:
+- In the Atlas dashboard, click on "Connect" for your cluster.
+- Choose "Connect your application" and copy the provided connection string.
+- Create a `.env` file in your project root if you haven't already.
+- Add your MongoDB Atlas connection string to the `.env` file:
+
+```
+MONGODB_URI="mongodb+srv://username:password@your-cluster-url.mongodb.net/?retryWrites=true&w=majority&appName=your-cluster-name"
+```
+
+Replace `username`, `password`, `your-cluster-url`, and `your-cluster-name` with your actual credentials and cluster information.
+#### Pinecone Serverless
+
+Pinecone is a managed, cloud-native vector database that provides long-term memory for high-performance AI applications.
+
+1. Sign up for a Pinecone account at [https://login.pinecone.io/login](https://login.pinecone.io/login) if you haven't already.
+
+2. After logging in, generate an API key from the Pinecone console.
+
+3. Create a serverless index:
+   - Choose a name for your index (e.g., "example-index")
+   - Set the dimension based on your embedding model (e.g., 1536 for OpenAI embeddings)
+   - Select "cosine" as the metric
+   - Choose "Serverless" as the index type
+   - Select your preferred cloud provider and region (e.g., AWS us-east-1)
+
+4. Once you have created your index and obtained your API key, add them to your `.env` file:
+
+```
+PINECONE_API_KEY=your-api-key
+PINECONE_INDEX_NAME=your-index-name
+```
+
+
+### Setup Model
+
+The defaults values for `response_model`, `query_model` are shown below:
+
+```yaml
+response_model: anthropic/claude-3-5-sonnet-20240620
+query_model: anthropic/claude-3-haiku-20240307
 ```
 
 Follow the instructions below to get set up, or pick one of the additional options.
@@ -72,30 +206,78 @@ OPENAI_API_KEY=your-api-key
 
 
 
+### Setup Embedding Model
+
+The defaults values for `embedding_model` are shown below:
+
+```yaml
+embedding_model: openai/text-embedding-3-small
+```
+
+Follow the instructions below to get set up, or pick one of the additional options.
+
+#### OpenAI
+
+To use OpenAI's embeddings:
+
+1. Sign up for an [OpenAI API key](https://platform.openai.com/signup).
+2. Once you have your API key, add it to your `.env` file:
+```
+OPENAI_API_KEY=your-api-key
+```
+
+#### Cohere
+
+To use Cohere's embeddings:
+
+1. Sign up for a [Cohere API key](https://dashboard.cohere.com/welcome/register).
+2. Once you have your API key, add it to your `.env` file:
+
+```bash
+COHERE_API_KEY=your-api-key
+```
+
+
+
 
 
 <!--
 End setup instructions
 -->
 
+## Using
 
-3. Customize whatever you'd like in the code.
-4. Open the folder LangGraph Studio!
+Once you've set up your retriever and saved your model secrets, it's time to try it out! First, let's add some information to the index. Open studio, select the "indexer" graph from the dropdown in the top-left, and then add some content to chat over. You can just invoke it with an empty list (default) to index sample documents from LangChain and LangGraph documentation.
+
+You'll know that the indexing is complete when the indexer "delete"'s the content from its graph memory (since it's been persisted in your configured storage provider).
+
+Next, open the "retrieval_graph" using the dropdown in the top-left. Ask it questions about LangChain to confirm it can fetch the required information!
 
 ## How to customize
 
-1. **Add new tools**: Extend the agent's capabilities by adding new tools in [tools.py](./src/react_agent/tools.py). These can be any Python functions that perform specific tasks.
-2. **Select a different model**: We default to Anthropic's Claude 3 Sonnet. You can select a compatible chat model using `provider/model-name` via configuration. Example: `openai/gpt-4-turbo-preview`.
-3. **Customize the prompt**: We provide a default system prompt in [prompts.py](./src/react_agent/prompts.py). You can easily update this via configuration in the studio.
+You can customize this retrieval agent template in several ways:
 
-You can also quickly extend this template by:
+1. **Change the retriever**: You can switch between different vector stores (Elasticsearch, MongoDB, Pinecone) by modifying the `retriever_provider` in the configuration. Each provider has its own setup instructions in the "Getting Started" section above.
 
-- Modifying the agent's reasoning process in [graph.py](./src/react_agent/graph.py).
-- Adjusting the ReAct loop or adding additional steps to the agent's decision-making process.
+1. **Modify the embedding model**: You can change the embedding model used for document indexing and query embedding by updating the `embedding_model` in the configuration. Options include various OpenAI and Cohere models.
+
+1. **Adjust search parameters**: Fine-tune the retrieval process by modifying the `search_kwargs` in the configuration. This allows you to control aspects like the number of documents retrieved or similarity thresholds.
+
+1. **Customize the response generation**: You can modify the `response_system_prompt` to change how the agent formulates its responses. This allows you to adjust the agent's personality or add specific instructions for answer generation.
+
+1. **Modify prompts**: Update the prompts used for user query routing, research planning, query generation and more in `src/retrieval_graph/prompts.py` to better suit your specific use case or to improve the agent's performance. You can also modify these directly in LangGraph Studio.
+
+1. **Change the language model**: Update the `response_model` in the configuration to use different language models for response generation. Options include various Claude models from Anthropic, as well as models from other providers like Fireworks AI.
+
+1. **Extend the graph**: You can add new nodes or modify existing ones in the `src/retrieval_graph/graph.py` file to introduce additional processing steps or decision points in the agent's workflow.
+
+1. **Add tools**: Implement tools to expand the researcher agent's capabilities beyond simple retrieval generation.
+
+Remember to test your changes thoroughly to ensure they improve the agent's performance for your specific use case.
 
 ## Development
 
-While iterating on your graph, you can edit past state and rerun your app from past states to debug specific nodes. Local changes will be automatically applied via hot reload. Try adding an interrupt before the agent calls tools, updating the default system message in `src/react_agent/configuration.py` to take on a persona, or adding additional nodes and edges!
+While iterating on your graph, you can edit past state and rerun your app from past states to debug specific nodes. Local changes will be automatically applied via hot reload. Try adding an interrupt before the agent calls the researcher subgraph, updating the default system message in `src/retrieval_graph/prompts.py` to take on a persona, or adding additional nodes and edges!
 
 Follow up requests will be appended to the same thread. You can create an entirely new thread, clearing previous history, using the `+` button in the top right.
 
@@ -103,19 +285,317 @@ You can find the latest (under construction) docs on [LangGraph](https://github.
 
 LangGraph Studio also integrates with [LangSmith](https://smith.langchain.com/) for more in-depth tracing and collaboration with teammates.
 
-[^1]: https://python.langchain.com/docs/concepts/#tools
-
 <!--
 Configuration auto-generated by `langgraph template lock`. DO NOT EDIT MANUALLY.
 {
   "config_schemas": {
-    "agent": {
+    "indexer": {
       "type": "object",
       "properties": {
-        "model": {
+        "embedding_model": {
+          "type": "string",
+          "default": "openai/text-embedding-3-small",
+          "description": "Name of the embedding model to use. Must be a valid embedding model name.",
+          "environment": [
+            {
+              "value": "cohere/embed-english-light-v2.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-english-light-v3.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-english-v2.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-english-v3.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-multilingual-light-v3.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-multilingual-v2.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-multilingual-v3.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "openai/text-embedding-3-large",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/text-embedding-3-small",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/text-embedding-ada-002",
+              "variables": "OPENAI_API_KEY"
+            }
+          ]
+        },
+        "retriever_provider": {
+          "enum": [
+            "elastic",
+            "elastic-local",
+            "mongodb",
+            "pinecone"
+          ],
+          "default": "elastic",
+          "description": "The vector store provider to use for retrieval. Options are 'elastic', 'pinecone', or 'mongodb'.",
+          "environment": [
+            {
+              "value": "elastic",
+              "variables": [
+                "ELASTICSEARCH_URL",
+                "ELASTICSEARCH_API_KEY"
+              ]
+            },
+            {
+              "value": "elastic-local",
+              "variables": [
+                "ELASTICSEARCH_URL",
+                "ELASTICSEARCH_USER",
+                "ELASTICSEARCH_PASSWORD"
+              ]
+            },
+            {
+              "value": "mongodb",
+              "variables": [
+                "MONGODB_URI"
+              ]
+            },
+            {
+              "value": "pinecone",
+              "variables": [
+                "PINECONE_API_KEY",
+                "PINECONE_INDEX_NAME"
+              ]
+            }
+          ],
+          "type": "string"
+        }
+      }
+    },
+    "retrieval_graph": {
+      "type": "object",
+      "properties": {
+        "embedding_model": {
+          "type": "string",
+          "default": "openai/text-embedding-3-small",
+          "description": "Name of the embedding model to use. Must be a valid embedding model name.",
+          "environment": [
+            {
+              "value": "cohere/embed-english-light-v2.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-english-light-v3.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-english-v2.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-english-v3.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-multilingual-light-v3.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-multilingual-v2.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "cohere/embed-multilingual-v3.0",
+              "variables": "COHERE_API_KEY"
+            },
+            {
+              "value": "openai/text-embedding-3-large",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/text-embedding-3-small",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/text-embedding-ada-002",
+              "variables": "OPENAI_API_KEY"
+            }
+          ]
+        },
+        "retriever_provider": {
+          "enum": [
+            "elastic",
+            "elastic-local",
+            "mongodb",
+            "pinecone"
+          ],
+          "default": "elastic",
+          "description": "The vector store provider to use for retrieval. Options are 'elastic', 'pinecone', or 'mongodb'.",
+          "environment": [
+            {
+              "value": "elastic",
+              "variables": [
+                "ELASTICSEARCH_URL",
+                "ELASTICSEARCH_API_KEY"
+              ]
+            },
+            {
+              "value": "elastic-local",
+              "variables": [
+                "ELASTICSEARCH_URL",
+                "ELASTICSEARCH_USER",
+                "ELASTICSEARCH_PASSWORD"
+              ]
+            },
+            {
+              "value": "mongodb",
+              "variables": [
+                "MONGODB_URI"
+              ]
+            },
+            {
+              "value": "pinecone",
+              "variables": [
+                "PINECONE_API_KEY",
+                "PINECONE_INDEX_NAME"
+              ]
+            }
+          ],
+          "type": "string"
+        },
+        "response_model": {
           "type": "string",
           "default": "anthropic/claude-3-5-sonnet-20240620",
-          "description": "The name of the language model to use for the agent's main interactions. Should be in the form: provider/model-name.",
+          "description": "The language model used for generating responses. Should be in the form: provider/model-name.",
+          "environment": [
+            {
+              "value": "anthropic/claude-1.2",
+              "variables": "ANTHROPIC_API_KEY"
+            },
+            {
+              "value": "anthropic/claude-2.0",
+              "variables": "ANTHROPIC_API_KEY"
+            },
+            {
+              "value": "anthropic/claude-2.1",
+              "variables": "ANTHROPIC_API_KEY"
+            },
+            {
+              "value": "anthropic/claude-3-5-sonnet-20240620",
+              "variables": "ANTHROPIC_API_KEY"
+            },
+            {
+              "value": "anthropic/claude-3-haiku-20240307",
+              "variables": "ANTHROPIC_API_KEY"
+            },
+            {
+              "value": "anthropic/claude-3-opus-20240229",
+              "variables": "ANTHROPIC_API_KEY"
+            },
+            {
+              "value": "anthropic/claude-3-sonnet-20240229",
+              "variables": "ANTHROPIC_API_KEY"
+            },
+            {
+              "value": "anthropic/claude-instant-1.2",
+              "variables": "ANTHROPIC_API_KEY"
+            },
+            {
+              "value": "openai/gpt-3.5-turbo",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-3.5-turbo-0125",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-3.5-turbo-0301",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-3.5-turbo-0613",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-3.5-turbo-1106",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-3.5-turbo-16k",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-3.5-turbo-16k-0613",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-0125-preview",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-0314",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-0613",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-1106-preview",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-32k",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-32k-0314",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-32k-0613",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-turbo",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-turbo-preview",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4-vision-preview",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4o",
+              "variables": "OPENAI_API_KEY"
+            },
+            {
+              "value": "openai/gpt-4o-mini",
+              "variables": "OPENAI_API_KEY"
+            }
+          ]
+        },
+        "query_model": {
+          "type": "string",
+          "default": "anthropic/claude-3-haiku-20240307",
+          "description": "The language model used for processing and refining queries. Should be in the form: provider/model-name.",
           "environment": [
             {
               "value": "anthropic/claude-1.2",
@@ -231,10 +711,7 @@ Configuration auto-generated by `langgraph template lock`. DO NOT EDIT MANUALLY.
             }
           ]
         }
-      },
-      "environment": [
-        "TAVILY_API_KEY"
-      ]
+      }
     }
   }
 }
