@@ -1,12 +1,12 @@
 [project]
-name = "react-agent"
+name = "rag-research-graph"
 version = "0.0.1"
-description = "Starter template for making a custom Reasoning and Action agent (using tool calling) in LangGraph."
+description = "Starter template for making a custom RAG research agent graph in LangGraph."
 authors = [
-    { name = "William Fu-Hinthorn", email = "13333726+hinthornw@users.noreply.github.com" },
+    { name = "Vadym Barda", email = "19161700+vbarda@users.noreply.github.com" }
 ]
-readme = "README.md"
 license = { text = "MIT" }
+readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "langgraph>=0.2.6",
@@ -15,10 +15,12 @@ dependencies = [
     "langchain>=0.2.14",
     "langchain-fireworks>=0.1.7",
     "python-dotenv>=1.0.1",
-    "langchain-community>=0.2.17",
-    "tavily-python>=0.4.0",
+    "langchain-elasticsearch>=0.2.2,<0.3.0",
+    "langchain-pinecone>=0.1.3,<0.2.0",
+    "msgspec>=0.18.6",
+    "langchain-mongodb>=0.1.9",
+    "langchain-cohere>=0.2.4",
 ]
-
 
 [project.optional-dependencies]
 dev = ["mypy>=1.11.1", "ruff>=0.6.1"]
@@ -28,10 +30,13 @@ requires = ["setuptools>=73.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["langgraph.templates.react_agent", "react_agent"]
+packages = ["retrieval_graph", "index_graph", "shared"]
 [tool.setuptools.package-dir]
-"langgraph.templates.react_agent" = "src/react_agent"
-"react_agent" = "src/react_agent"
+"langgraph.templates.retrieval_graph" = "src/retrieval_graph"
+"langgraph.templates.index_graph" = "src/index_graph"
+"retrieval_graph" = "src/retrieval_graph"
+"index_graph" = "src/index_graph"
+"shared" = "src/shared"
 
 
 [tool.setuptools.package-data]
@@ -60,3 +65,7 @@ lint.ignore = [
 "tests/*" = ["D", "UP"]
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]

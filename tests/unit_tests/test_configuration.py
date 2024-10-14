@@ -1,5 +1,5 @@
-from react_agent.configuration import Configuration
+from shared.configuration import BaseConfiguration
 
 
 def test_configuration_empty() -> None:
-    Configuration.from_runnable_config({})
+    BaseConfiguration.from_runnable_config({})
