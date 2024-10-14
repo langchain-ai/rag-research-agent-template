@@ -3,7 +3,7 @@ name = "rag-research-graph"
 version = "0.0.1"
 description = "Starter template for making a custom RAG research agent graph in LangGraph."
 authors = [
-    { name = "Vadym Barda", email = 19161700+vbarda@users.noreply.github.com  },
+    { name = "Vadym Barda", email = "19161700+vbarda@users.noreply.github.com" }
 ]
 license = { text = "MIT" }
 readme = "README.md"
