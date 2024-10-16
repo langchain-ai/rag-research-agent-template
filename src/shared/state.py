@@ -7,7 +7,7 @@ from typing import Any, Literal, Optional, Union
 from langchain_core.documents import Document
 
 
-def generate_uuid(page_content: str) -> str:
+def _generate_uuid(page_content: str) -> str:
     """Generate a UUID for a document based on page content."""
     md5_hash = hashlib.md5(page_content.encode()).hexdigest()
     return str(uuid.UUID(md5_hash))
