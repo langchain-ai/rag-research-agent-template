@@ -41,7 +41,7 @@ def reduce_docs(
     existing_list = list(existing) if existing else []
     if isinstance(new, str):
         return existing_list + [
-            Document(page_content=new, metadata={"uuid": generate_uuid(new)})
+            Document(page_content=new, metadata={"uuid": _generate_uuid(new)})
         ]
 
     new_list = []
@@ -49,13 +49,13 @@ def reduce_docs(
         existing_ids = set(doc.metadata.get("uuid") for doc in existing_list)
         for item in new:
             if isinstance(item, str):
-                item_id = generate_uuid(item)
+                item_id = _generate_uuid(item)
                 new_list.append(Document(page_content=item, metadata={"uuid": item_id}))
                 existing_ids.add(item_id)
 
             elif isinstance(item, dict):
                 metadata = item.get("metadata", {})
-                item_id = metadata.get("uuid") or generate_uuid(
+                item_id = metadata.get("uuid") or _generate_uuid(
                     item.get("page_content", "")
                 )
 
@@ -68,7 +68,7 @@ def reduce_docs(
             elif isinstance(item, Document):
                 item_id = item.metadata.get("uuid", "")
                 if not item_id:
-                    item_id = generate_uuid(item.page_content)
+                    item_id = _generate_uuid(item.page_content)
                     new_item = item.copy(deep=True)
                     new_item.metadata["uuid"] = item_id
                 else:
