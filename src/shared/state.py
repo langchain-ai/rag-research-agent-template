@@ -61,7 +61,7 @@ def reduce_docs(
 
                 if item_id not in existing_ids:
                     new_list.append(
-                        Document(**item, metadata={**metadata, "uuid": item_id})
+                        Document(**{**item, "metadata": {**metadata, "uuid": item_id}})
                     )
                     existing_ids.add(item_id)
 

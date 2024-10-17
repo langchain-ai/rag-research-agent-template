@@ -119,7 +119,7 @@ async def respond_to_general_query(
 
 async def create_research_plan(
     state: AgentState, *, config: RunnableConfig
-) -> dict[str, list[str]]:
+) -> dict[str, list[str] | str]:
     """Create a step-by-step research plan for answering a LangChain-related query.
 
     Args:
@@ -141,7 +141,7 @@ async def create_research_plan(
         {"role": "system", "content": configuration.research_plan_system_prompt}
     ] + state.messages
     response = cast(Plan, await model.ainvoke(messages))
-    return {"steps": response["steps"]}
+    return {"steps": response["steps"], "documents": "delete"}
 
 
 async def conduct_research(state: AgentState) -> dict[str, Any]:
