@@ -181,6 +181,49 @@ PINECONE_API_KEY=your-api-key
 PINECONE_INDEX_NAME=your-index-name
 ```
 
+#### LanceDB
+LanceDB is an open-source database for vector search built with persistent storage, greatly simplifying retrieval, filtering, and management of embeddings.
+
+---
+
+#### Using LanceDB
+
+1. Create a LanceDB Cloud Instance:
+   - Visit the [LanceDB website](https://docs.lancedb.com/api-reference/introduction) to set up your instance.
+   - Obtain the database URL, API key, and optionally configure a region.
+
+
+2. Set Up LanceDB Vector Store:
+   - Use the LanceDB vector store to store and query embeddings.
+
+   Example:
+   ```python
+   from langchain_community.vectorstores import LanceDB
+
+   db_url = "db://lang_test"  # Replace with your LanceDB URL
+   api_key = "xxxxx"  # Replace with your API Key
+   region = "us-east-1-dev"  # Replace with your region
+
+   vector_store = LanceDB(
+       uri=db_url,
+       api_key=api_key,
+       region=region,
+       embedding=embeddings,
+       table_name="langchain_test"
+   )
+   ```
+
+3. Add Environment Variables:
+   - Create a `.env` file in your project root and include the following:
+
+     ```ini
+     LANCEDB_URL=db://lang_test 
+     LANCEDB_API_KEY=... 
+     LANCEDB_REGION=...
+     ```
+
+ -  For more details, visit the [LanceDB documentation](https://docs.lancedb.com/enterprise/introduction).
+
 
 ### Setup Model
 
