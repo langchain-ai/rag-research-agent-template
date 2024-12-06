@@ -27,12 +27,12 @@ class BaseConfiguration:
     )
 
     retriever_provider: Annotated[
-        Literal["elastic-local", "elastic", "pinecone", "mongodb"],
+        Literal["elastic-local", "elastic", "pinecone", "mongodb", "lancdb"],
         {"__template_metadata__": {"kind": "retriever"}},
     ] = field(
         default="elastic-local",
         metadata={
-            "description": "The vector store provider to use for retrieval. Options are 'elastic', 'pinecone', or 'mongodb'."
+            "description": "The vector store provider to use for retrieval. Options are 'elastic', 'pinecone', 'mongodb' or 'lancdb'"
         },
     )
 
