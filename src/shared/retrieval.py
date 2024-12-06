@@ -1,7 +1,7 @@
 """Manage the configuration of various retrievers.
 
 This module provides functionality to create and manage retrievers for different
-vector store backends, specifically Elasticsearch, Pinecone, and MongoDB.
+vector store backends, specifically Elasticsearch, Pinecone,  MongoDB and Lancedb.
 """
 
 import os
@@ -92,6 +92,32 @@ def make_mongodb_retriever(
 
 
 @contextmanager
+def make_lancedb_retriever(
+    configuration: BaseConfiguration, embedding_model: Embeddings
+) -> Generator[VectorStoreRetriever, None, None]:
+    """Configure this agent to connect to a specific LanceDB index."""
+    from langchain_community.vectorstores import LanceDB
+
+    # Get LanceDB specific configuration
+    db_url = os.environ["LANCEDB_URL"]
+    # api_key = os.environ["LANCEDB_API_KEY"]
+    # region = os.environ.get("LANCEDB_REGION", "us-east-1-dev")  # Default region
+    table_name = configuration.get("table_name", "langchain_test")
+
+    # Initialize LanceDB vector store
+    vstore = LanceDB(
+        uri=db_url,
+        # api_key=api_key,
+        # region=region,
+        embedding=embedding_model,
+        table_name=table_name,
+    )
+
+    # Yield LanceDB retriever
+    yield vstore.as_retriever(search_kwargs=configuration.search_kwargs)
+
+
+@contextmanager
 def make_retriever(
     config: RunnableConfig,
 ) -> Generator[VectorStoreRetriever, None, None]:
@@ -109,6 +135,9 @@ def make_retriever(
 
         case "mongodb":
             with make_mongodb_retriever(configuration, embedding_model) as retriever:
+                yield retriever
+        case "lancedb":
+            with make_lancedb_retriever(configuration, embedding_model) as retriever:
                 yield retriever
 
         case _:
